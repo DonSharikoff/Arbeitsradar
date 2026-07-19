@@ -1,0 +1,9 @@
+# IDEs and editors
+/.idea
+.DS_Store
+
+.env
+
+# Planning docs (personal for now)
+CLAUDE.md
+ROADMAP.md

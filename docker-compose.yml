@@ -1,0 +1,39 @@
+services:
+  back:
+    hostname: back
+    depends_on:
+      - mongo
+    build: docker/node
+    volumes:
+      - "./back:/www"
+    ports:
+      - "3000:3000"
+    entrypoint:
+      /bin/sh -c "npm install && npm run build && npm run start:dev"
+
+  nginx:
+    build: docker/nginx
+    depends_on:
+      - back
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./docker/nginx/conf.d/development.conf:/etc/nginx/nginx.conf"
+
+  mongo:
+    image: mongo:8.0
+    hostname: mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      - "MONGO_INITDB_DATABASE=${DATABASE_NAME}"
+      - "MONGO_INITDB_ROOT_USERNAME=${DATABASE_USER}"
+      - "MONGO_INITDB_ROOT_PASSWORD=${DATABASE_PASSWORD}"
+    volumes:
+      - database:/data/db
+      - "./mongo/snapshot:/dumps"
+
+volumes:
+  database:
