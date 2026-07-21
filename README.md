@@ -1,22 +1,21 @@
 # Arbeitsradar
 
-Job market aggregator and analytics.
+Job portal for the German market with extended context around each vacancy.
 
-A showcase pet project for job hunting (Germany, winter 2026). Collects
-vacancies from German and Ukrainian/remote sources, normalizes them into a
-single model, and provides market analytics plus a personal application
-tracker.
+Not just a listing — every job is shown together with data about the
+profession behind it: how many people move into it, how many leave, how
+many openings exist right now. All data comes from Bundesagentur für Arbeit
+public APIs (Jobsuche, BERUFENET, NewPlan).
 
-The goal is not a business product but a skills demonstration: NestJS,
-MongoDB, RabbitMQ, Redis, Docker, Angular, ETL.
+A portfolio project. The goal is not a business product but a backend
+engineering skills demonstration: NestJS, MongoDB, Redis, Docker, Angular.
 
 ## Stack
 
 - **Backend:** NestJS (monolith, modular structure)
-- **DB:** MongoDB 8.0 + Mongoose
-- **Queues:** RabbitMQ
-- **Cache/dedup:** Redis
-- **Frontend:** Angular
+- **DB:** MongoDB 8.0 + Mongoose (TTL-based caching, no long-term storage)
+- **Cache:** Redis (reference data, resolve maps, rate limiting)
+- **Frontend:** Angular + Tailwind
 - **Infrastructure:** Docker Compose, nginx
 
 ## Quick start
