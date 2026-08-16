@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
@@ -13,6 +13,8 @@ async function bootstrap() {
 
   app.enableShutdownHooks();
   app.use(helmet());
+  app.setGlobalPrefix('api');
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
   if (!isProduction) {
     const config = new DocumentBuilder()

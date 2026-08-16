@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { DbModule } from './db/db.module';
-import { IngestionModule } from './ingestion/ingestion.module';
 import { HealthModule } from './health/health.module';
 import Joi from 'joi';
+import { VacanciesModule } from './vacancies/vacancies.module';
 
 @Module({
   imports: [
@@ -19,11 +19,12 @@ import Joi from 'joi';
         DATABASE_USER: Joi.string().required(),
         DATABASE_PASSWORD: Joi.string().required(),
         DATABASE_NAME: Joi.string().required(),
+        JOBSUCHE_API_KEY: Joi.string().required(),
       }),
     }),
     DbModule,
-    IngestionModule,
     HealthModule,
+    VacanciesModule,
   ],
   controllers: [],
   providers: [],

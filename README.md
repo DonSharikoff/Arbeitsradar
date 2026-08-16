@@ -8,13 +8,12 @@ many openings exist right now. All data comes from Bundesagentur für Arbeit
 public APIs (Jobsuche, BERUFENET, NewPlan).
 
 A portfolio project. The goal is not a business product but a backend
-engineering skills demonstration: NestJS, MongoDB, Redis, Docker, Angular.
+engineering skills demonstration: NestJS, MongoDB, Docker, Angular.
 
 ## Stack
 
 - **Backend:** NestJS (monolith, modular structure)
 - **DB:** MongoDB 8.0 + Mongoose (TTL-based caching, no long-term storage)
-- **Cache:** Redis (reference data, resolve maps, rate limiting)
 - **Frontend:** Angular + Tailwind
 - **Infrastructure:** Docker Compose, nginx
 
@@ -51,11 +50,9 @@ mongo/snapshot/  MongoDB dumps/snapshots
 docker-compose.yml
 Makefile
 CLAUDE.md        conventions and architectural decisions for working with Claude Code
-ROADMAP.md       sprint plan
 ```
 
-## Status and roadmap
+## Status
 
-The project is under active development. The current sprint and feature
-plan live in [ROADMAP.md](./ROADMAP.md). Architectural decisions and code
+The project is under active development. Architectural decisions and code
 conventions are in [CLAUDE.md](./CLAUDE.md).
