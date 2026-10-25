@@ -1,0 +1,55 @@
+<main class="min-h-screen bg-slate-50 px-6 py-10">
+  <div class="mx-auto max-w-5xl">
+    <h1 class="mb-6 text-2xl font-semibold text-slate-800">Stellenangebote</h1>
+
+    <form class="mb-3 flex gap-2" (submit)="$event.preventDefault(); search(searchInput.value)">
+      <input
+        #searchInput
+        type="text"
+        placeholder="Suche nach Jobtitel…"
+        [value]="searchTerm()"
+        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-800 shadow-sm outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+      />
+      <button
+        type="submit"
+        class="shrink-0 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-indigo-700"
+      >
+        Suchen
+      </button>
+    </form>
+
+    @if (locationFilter()) {
+      <div class="mb-6">
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700 ring-1 ring-inset ring-sky-200">
+          Standort: {{ locationFilter() }}
+          <button
+            type="button"
+            (click)="clearLocationFilter()"
+            class="text-sky-500 transition hover:text-sky-700"
+            aria-label="Standortfilter entfernen"
+          >
+            ✕
+          </button>
+        </span>
+      </div>
+    }
+
+    @if (error()) {
+      <p class="text-sm text-red-600">Vacancies could not be loaded.</p>
+    }
+
+    @if (!loading() && !error() && vacancies().length === 0) {
+      <p class="text-sm text-slate-500">Keine Treffer.</p>
+    }
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      @for (vacancy of vacancies(); track vacancy.externalRef; let i = $index) {
+        <div class="animate-fade-in-up" [style.animation-delay.ms]="i * 60">
+          <app-vacancy-card [vacancy]="vacancy" />
+        </div>
+      }
+    </div>
+
+    <app-pagination [page]="page()" [totalPages]="totalPages()" (pageChange)="goToPage($event)" />
+  </div>
+</main>

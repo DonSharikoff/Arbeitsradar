@@ -1,0 +1,21 @@
+@if (totalPages() > 1) {
+  <div class="mt-8 flex items-center justify-center gap-3">
+    <button
+      type="button"
+      class="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-600 shadow-sm transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+      [disabled]="page() <= 1"
+      (click)="goTo(page() - 1)"
+    >
+      Zurück
+    </button>
+    <span class="text-sm text-slate-500">Seite {{ page() }} von {{ totalPages() }}</span>
+    <button
+      type="button"
+      class="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-600 shadow-sm transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+      [disabled]="page() >= totalPages()"
+      (click)="goTo(page() + 1)"
+    >
+      Weiter
+    </button>
+  </div>
+}
