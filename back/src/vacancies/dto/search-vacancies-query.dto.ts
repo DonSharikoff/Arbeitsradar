@@ -21,13 +21,13 @@ export class SearchVacanciesQueryDto {
   @IsString()
   @MaxLength(200)
   @ApiPropertyOptional({ description: 'Search term / job title' })
-  query?: string;
+  declare query?: string;
 
   @IsOptional()
   @IsString()
   @MaxLength(200)
   @ApiPropertyOptional({ description: 'City or postcode' })
-  location?: string;
+  declare location?: string;
 
   @IsOptional()
   @Type(() => Number)
@@ -35,7 +35,7 @@ export class SearchVacanciesQueryDto {
   @Min(0)
   @Max(200)
   @ApiPropertyOptional({ type: Number, minimum: 0, maximum: 200 })
-  radius?: number;
+  declare radius?: number;
 
   @IsOptional()
   @Type(() => Number)
@@ -58,18 +58,18 @@ export class SearchVacanciesQueryDto {
   @Min(0)
   @Max(100)
   @ApiPropertyOptional({ description: 'Posted within N days', maximum: 100 })
-  postedIn?: number;
+  declare postedIn?: number;
 
   @IsOptional()
   @IsString()
   @ApiPropertyOptional()
-  employer?: string;
+  declare employer?: string;
 
   @IsOptional()
   @Transform(toBoolean)
   @IsBoolean()
   @ApiPropertyOptional({ type: Boolean })
-  temporary?: boolean;
+  declare temporary?: boolean;
 
   // page/size are already the same on both sides. Undefined values are
   // dropped by axios itself when building the query string.

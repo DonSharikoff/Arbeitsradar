@@ -4,6 +4,7 @@ import { DbModule } from './db/db.module';
 import { HealthModule } from './health/health.module';
 import Joi from 'joi';
 import { VacanciesModule } from './vacancies/vacancies.module';
+import { CitiesModule } from './cities/cities.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { VacanciesModule } from './vacancies/vacancies.module';
     DbModule,
     HealthModule,
     VacanciesModule,
+    CitiesModule,
   ],
   controllers: [],
   providers: [],

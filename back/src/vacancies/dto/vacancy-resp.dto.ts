@@ -4,33 +4,33 @@ import { VacancyRawDto } from './vacancy-raw.dto';
 
 export class JobLocationDto {
   @ApiPropertyOptional()
-  street?: string;
+  declare street?: string;
 
   @ApiPropertyOptional()
-  postalCode?: string;
+  declare postalCode?: string;
 
   @ApiPropertyOptional()
-  city?: string;
+  declare city?: string;
 
   @ApiPropertyOptional()
-  region?: string;
+  declare region?: string;
 
   @ApiPropertyOptional()
-  country?: string;
+  declare country?: string;
 }
 
 export class JobWorkingTimeDto {
   @ApiProperty()
-  fullTime: boolean;
+  declare fullTime: boolean;
 
   @ApiProperty()
-  partTime: boolean;
+  declare partTime: boolean;
 
   @ApiProperty()
-  shiftWork: boolean;
+  declare shiftWork: boolean;
 
   @ApiProperty()
-  homeOffice: boolean;
+  declare homeOffice: boolean;
 }
 
 // English view over VacancyRawDto's raw upstream (German) fields - see that

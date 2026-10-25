@@ -244,7 +244,7 @@ export class VacanciesListDto {
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  facetten?: Record<string, unknown>;
+  declare facetten?: Record<string, unknown>;
 
   @Expose()
   @ApiProperty({ type: [VacanciesListsDto] })

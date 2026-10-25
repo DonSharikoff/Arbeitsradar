@@ -27,5 +27,13 @@ connect_back:
 	@docker compose -f ${DOCKER_CONFIG} exec -w /www back sh
 
 
+migrate: # apply pending backend DB migrations
+	@docker compose -f ${DOCKER_CONFIG} exec -w /www back npm run migrate:up
+
+
+connect_front:
+	@docker compose -f ${DOCKER_CONFIG} exec -w /www front sh
+
+
 connect_nginx:
 	@docker compose -f ${DOCKER_CONFIG} exec -w /www nginx sh

@@ -22,6 +22,7 @@ export class VacanciesClientService {
     return this.httpService
       .get<VacanciesListDto>(this.JOBSUCHE_JOBS_PATH, {
         params: params.toJobsucheParams(),
+
       })
       .pipe(
         map((res) => res.data),

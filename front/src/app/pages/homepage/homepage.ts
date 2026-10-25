@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { VacanciesService } from '../../services/vacancies.service';
+import { CitySelect } from '../../shared/city-select/city-select';
 
 interface ProfessionField {
   label: string;
@@ -69,11 +70,11 @@ const CITIES: City[] = [
 ];
 
 @Component({
-  selector: 'app-landing',
-  imports: [RouterLink],
-  templateUrl: './landing.html',
+  selector: 'app-homepage',
+  imports: [RouterLink, CitySelect],
+  templateUrl: './homepage.html',
 })
-export class Landing {
+export class Homepage {
   private readonly router = inject(Router);
   private readonly vacanciesService = inject(VacanciesService);
 
@@ -90,7 +91,16 @@ export class Landing {
     }
   }
 
-  protected search(term: string): void {
-    this.router.navigate(['/vacancies'], { queryParams: term ? { query: term } : {} });
+  protected onSubmit(event: SubmitEvent): void {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+
+    const term = (formData.get('query') as string | null) ?? '';
+    const location = (formData.get('location') as string | null) ?? '';
+    const queryParams: Record<string, string> = {};
+    if (term) queryParams['query'] = term;
+    if (location) queryParams['location'] = location;
+
+    this.router.navigate(['/vacancies'], { queryParams });
   }
 }

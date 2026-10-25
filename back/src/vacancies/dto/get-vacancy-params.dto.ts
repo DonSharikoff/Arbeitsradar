@@ -8,5 +8,5 @@ export class GetVacancyDto {
     message: 'id has an invalid format',
   })
   @ApiProperty({ example: '10000-1198951489-S' })
-  id: string;
+  declare id: string;
 }

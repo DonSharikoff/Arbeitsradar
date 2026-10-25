@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { Landing } from './landing';
+import { Homepage } from './homepage';
 
-describe('Landing', () => {
+describe('Homepage', () => {
   let httpMock: HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Landing],
+      imports: [Homepage],
       providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 
@@ -21,10 +21,12 @@ describe('Landing', () => {
   });
 
   function createAndFlushCityCounts() {
-    const fixture = TestBed.createComponent(Landing);
+    const fixture = TestBed.createComponent(Homepage);
     httpMock
       .match((r) => r.url === '/api/vacancies')
       .forEach((req) => req.flush({ items: [], total: 0, page: 1, size: 1 }));
+    fixture.detectChanges();
+    httpMock.match((r) => r.url === '/api/cities').forEach((req) => req.flush([]));
     return fixture;
   }
 
@@ -38,5 +40,18 @@ describe('Landing', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain('vollen Bild');
+  });
+
+  it('defaults the city search to München when the form is submitted untouched', () => {
+    const fixture = createAndFlushCityCounts();
+    fixture.detectChanges();
+
+    const navigateSpy = vi.spyOn(TestBed.inject(Router), 'navigate');
+    const form = fixture.nativeElement.querySelector('form') as HTMLFormElement;
+    form.dispatchEvent(new Event('submit', { cancelable: true }));
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/vacancies'], {
+      queryParams: { location: 'München' },
+    });
   });
 });

@@ -2,37 +2,36 @@
   <div class="mx-auto max-w-5xl">
     <h1 class="mb-6 text-2xl font-semibold text-slate-800">Stellenangebote</h1>
 
-    <form class="mb-3 flex gap-2" (submit)="$event.preventDefault(); search(searchInput.value)">
+    <form class="mb-6 flex gap-2" (submit)="onSubmit($event)">
       <input
-        #searchInput
+        name="query"
         type="text"
         placeholder="Suche nach Jobtitel…"
         [value]="searchTerm()"
-        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-800 shadow-sm outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+        [disabled]="loading()"
+        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-800 shadow-sm outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
       />
+      <div class="w-44 shrink-0">
+        <app-city-select [initialValue]="locationFilter()" [disabled]="loading()" />
+      </div>
       <button
         type="submit"
-        class="shrink-0 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-indigo-700"
+        [disabled]="loading()"
+        class="flex shrink-0 items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-indigo-300"
       >
+        @if (loading()) {
+          <svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+            ></path>
+          </svg>
+        }
         Suchen
       </button>
     </form>
-
-    @if (locationFilter()) {
-      <div class="mb-6">
-        <span class="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700 ring-1 ring-inset ring-sky-200">
-          Standort: {{ locationFilter() }}
-          <button
-            type="button"
-            (click)="clearLocationFilter()"
-            class="text-sky-500 transition hover:text-sky-700"
-            aria-label="Standortfilter entfernen"
-          >
-            ✕
-          </button>
-        </span>
-      </div>
-    }
 
     @if (error()) {
       <p class="text-sm text-red-600">Vacancies could not be loaded.</p>

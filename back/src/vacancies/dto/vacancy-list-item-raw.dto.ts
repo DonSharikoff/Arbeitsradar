@@ -14,157 +14,157 @@ import type {
 export class VacancyListItemRawDto {
   @Expose()
   @Exclude({ toPlainOnly: true })
-  referenznummer: string;
+  declare referenznummer: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  stellenangebotsart?: string;
+  declare stellenangebotsart?: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  stellenangebotsTitel: string;
+  declare stellenangebotsTitel: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  hauptberuf: string;
+  declare hauptberuf: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  alleBerufe?: string[];
+  declare alleBerufe?: string[];
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  weitereBerufe?: string[];
+  declare weitereBerufe?: string[];
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  alternativBeruf1?: string;
+  declare alternativBeruf1?: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  alternativBeruf2?: string;
+  declare alternativBeruf2?: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  firma: string;
+  declare firma: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  arbeitgeberKundennummerHash?: string;
+  declare arbeitgeberKundennummerHash?: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  stellenlokationen: JobsucheStellenlokation[];
+  declare stellenlokationen: JobsucheStellenlokation[];
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  entfernung?: number;
+  declare entfernung?: number;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  eintrittszeitraum?: JobsucheZeitraum;
+  declare eintrittszeitraum?: JobsucheZeitraum;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  veroeffentlichungszeitraum?: JobsucheZeitraum;
+  declare veroeffentlichungszeitraum?: JobsucheZeitraum;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  datumErsteVeroeffentlichung?: string;
+  declare datumErsteVeroeffentlichung?: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  aenderungsdatum?: string;
+  declare aenderungsdatum?: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  verguetungsangabe?: string;
+  declare verguetungsangabe?: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  artDerVerguetung?: string;
+  declare artDerVerguetung?: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  festgehalt?: number;
+  declare festgehalt?: number;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  gehaltsspanneVon?: number;
+  declare gehaltsspanneVon?: number;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  gehaltsspanneBis?: number;
+  declare gehaltsspanneBis?: number;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  vertragsdauer?: string;
+  declare vertragsdauer?: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  befristetBis?: string;
+  declare befristetBis?: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  befristungInMonaten?: number;
+  declare befristungInMonaten?: number;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  arbeitszeitVollzeit?: boolean;
+  declare arbeitszeitVollzeit?: boolean;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  arbeitszeitTeilzeitVormittag?: boolean;
+  declare arbeitszeitTeilzeitVormittag?: boolean;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  arbeitszeitTeilzeitNachmittag?: boolean;
+  declare arbeitszeitTeilzeitNachmittag?: boolean;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  arbeitszeitTeilzeitAbend?: boolean;
+  declare arbeitszeitTeilzeitAbend?: boolean;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  arbeitszeitTeilzeitFlexibel?: boolean;
+  declare arbeitszeitTeilzeitFlexibel?: boolean;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  arbeitszeitSchichtNachtWochenende?: boolean;
+  declare arbeitszeitSchichtNachtWochenende?: boolean;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  istGeringfuegigeBeschaeftigung?: boolean;
+  declare istGeringfuegigeBeschaeftigung?: boolean;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  homeofficemoeglich?: boolean;
+  declare homeofficemoeglich?: boolean;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  homeofficetyp?: string;
+  declare homeofficetyp?: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  quereinstiegGeeignet?: boolean;
+  declare quereinstiegGeeignet?: boolean;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  ausbildungsart?: string;
+  declare ausbildungsart?: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  studienform?: string;
+  declare studienform?: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  studiengang?: string;
+  declare studiengang?: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  chiffrenummer?: string;
+  declare chiffrenummer?: string;
 
   @Expose()
   @Exclude({ toPlainOnly: true })
-  externeURL?: string;
+  declare externeURL?: string;
 }

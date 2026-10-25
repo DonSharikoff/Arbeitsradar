@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { VacancyCard } from '../../vacancy-card/vacancy-card';
 import { Pagination } from '../../shared/pagination/pagination';
+import { CitySelect } from '../../shared/city-select/city-select';
 import { Vacancy } from '../../models/vacancy.model';
 import { VacanciesService } from '../../services/vacancies.service';
 
@@ -9,7 +10,7 @@ const PAGE_SIZE = 12;
 
 @Component({
   selector: 'app-vacancies-list',
-  imports: [VacancyCard, Pagination],
+  imports: [VacancyCard, Pagination, CitySelect],
   templateUrl: './vacancies-list.html',
 })
 export class VacanciesList {
@@ -34,14 +35,12 @@ export class VacanciesList {
     this.load();
   }
 
-  protected search(term: string): void {
-    this.searchTerm.set(term);
-    this.page.set(1);
-    this.load();
-  }
+  protected onSubmit(event: SubmitEvent): void {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
 
-  protected clearLocationFilter(): void {
-    this.locationFilter.set('');
+    this.searchTerm.set((formData.get('query') as string | null) ?? '');
+    this.locationFilter.set((formData.get('location') as string | null) ?? '');
     this.page.set(1);
     this.load();
   }

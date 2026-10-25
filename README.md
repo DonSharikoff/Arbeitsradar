@@ -13,7 +13,9 @@ engineering skills demonstration: NestJS, MongoDB, Docker, Angular.
 ## Stack
 
 - **Backend:** NestJS (monolith, modular structure)
-- **DB:** MongoDB 8.0 + Mongoose (TTL-based caching, no long-term storage)
+- **DB:** MongoDB 8.0 + Mongoose (TTL-based caching for fetched vacancy/
+  profession data; a couple of static reference collections, like cities,
+  are permanent and seeded via `migrate-mongo`)
 - **Frontend:** Angular + Tailwind
 - **Infrastructure:** Docker Compose, nginx
 
@@ -26,7 +28,8 @@ cp .env.dist .env
 make up
 ```
 
-The app will be available at `http://localhost`.
+The app will be available at `http://localhost` (frontend) and
+`http://localhost/api` (backend, proxied by nginx).
 
 ### Useful commands
 
@@ -39,13 +42,16 @@ The app will be available at `http://localhost`.
 | `make ps` | container status |
 | `make build` | rebuild images |
 | `make connect_back` | open a shell in the backend container |
+| `make migrate` | apply pending backend DB migrations |
+| `make connect_front` | open a shell in the frontend container |
 | `make connect_nginx` | open a shell in the nginx container |
 
 ## Repository structure
 
 ```
 back/            NestJS application
-docker/          Dockerfiles (node, nginx)
+front/           Angular application
+docker/          Dockerfiles (node, front, nginx)
 mongo/snapshot/  MongoDB dumps/snapshots
 docker-compose.yml
 Makefile
