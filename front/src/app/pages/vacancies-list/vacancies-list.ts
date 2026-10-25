@@ -1,10 +1,12 @@
 import { Component, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+import { catchError, of, Subject, switchMap, tap } from 'rxjs';
 import { VacancyCard } from '../../vacancy-card/vacancy-card';
 import { Pagination } from '../../shared/pagination/pagination';
 import { CitySelect } from '../../shared/city-select/city-select';
 import { Vacancy } from '../../models/vacancy.model';
-import { VacanciesService } from '../../services/vacancies.service';
+import { VacanciesSearchParams, VacanciesService } from '../../services/vacancies.service';
 
 const PAGE_SIZE = 12;
 
@@ -27,11 +29,37 @@ export class VacanciesList {
   protected readonly loading = signal(false);
   protected readonly error = signal(false);
 
-  protected readonly totalPages = computed(() =>
-    Math.max(1, Math.ceil(this.total() / PAGE_SIZE)),
-  );
+  protected readonly totalPages = computed(() => Math.max(1, Math.ceil(this.total() / PAGE_SIZE)));
+
+  // switchMap cancels the in-flight request on every new search/page, so a
+  // slow earlier response can't land after (and overwrite) a newer one.
+  private readonly searchRequests = new Subject<VacanciesSearchParams>();
 
   public constructor() {
+    this.searchRequests
+      .pipe(
+        tap(() => {
+          this.loading.set(true);
+          this.error.set(false);
+        }),
+        switchMap((params) =>
+          this.vacanciesService.search(params).pipe(
+            catchError(() => {
+              this.error.set(true);
+              return of(null);
+            }),
+          ),
+        ),
+        takeUntilDestroyed(),
+      )
+      .subscribe((res) => {
+        if (res) {
+          this.vacancies.set(res.items);
+          this.total.set(res.total);
+        }
+        this.loading.set(false);
+      });
+
     this.load();
   }
 
@@ -51,26 +79,11 @@ export class VacanciesList {
   }
 
   private load(): void {
-    this.loading.set(true);
-    this.error.set(false);
-
-    this.vacanciesService
-      .search({
-        query: this.searchTerm() || undefined,
-        location: this.locationFilter() || undefined,
-        page: this.page(),
-        size: PAGE_SIZE,
-      })
-      .subscribe({
-        next: (res) => {
-          this.vacancies.set(res.items);
-          this.total.set(res.total);
-          this.loading.set(false);
-        },
-        error: () => {
-          this.error.set(true);
-          this.loading.set(false);
-        },
-      });
+    this.searchRequests.next({
+      query: this.searchTerm() || undefined,
+      location: this.locationFilter() || undefined,
+      page: this.page(),
+      size: PAGE_SIZE,
+    });
   }
 }

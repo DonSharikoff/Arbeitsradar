@@ -1,8 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
-// Reference data, not fetch-on-demand cache - no TTL. Seeded once via
-// seed/seed-cities.ts, not written to by the app at request time.
 @Schema({ collection: 'cities' })
 export class City {
   @Prop({ required: true })

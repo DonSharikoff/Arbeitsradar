@@ -28,7 +28,21 @@ describe('VacanciesList', () => {
     const fixture = TestBed.createComponent(VacanciesList);
 
     const req = httpMock.expectOne((r) => r.url === '/api/vacancies');
-    req.flush({ items: [{ externalRef: '1', title: 'Test', employer: 'Acme', homeOffice: false, fullTime: true, partTime: false }], total: 1, page: 1, size: 12 });
+    req.flush({
+      items: [
+        {
+          externalRef: '1',
+          title: 'Test',
+          employer: 'Acme',
+          homeOffice: false,
+          fullTime: true,
+          partTime: false,
+        },
+      ],
+      total: 1,
+      page: 1,
+      size: 12,
+    });
 
     fixture.detectChanges();
     flushCities();
@@ -62,5 +76,42 @@ describe('VacanciesList', () => {
     fixture.detectChanges();
     flushCities();
     expect(component.error()).toBe(true);
+  });
+
+  it('cancels a stale page request so it cannot overwrite a newer one', () => {
+    const fixture = TestBed.createComponent(VacanciesList);
+    const component = fixture.componentInstance as unknown as {
+      goToPage: (page: number) => void;
+      vacancies: () => { externalRef: string }[];
+    };
+    const page = (ref: string) => ({
+      items: [
+        {
+          externalRef: ref,
+          title: ref,
+          employer: 'Acme',
+          homeOffice: false,
+          fullTime: true,
+          partTime: false,
+        },
+      ],
+      total: 36,
+      size: 12,
+    });
+
+    httpMock.expectOne((r) => r.url === '/api/vacancies').flush({ ...page('p1'), page: 1 });
+
+    component.goToPage(2);
+    component.goToPage(3);
+
+    const [stale, fresh] = httpMock.match((r) => r.url === '/api/vacancies');
+    expect(stale.request.params.get('page')).toBe('2');
+    expect(stale.cancelled).toBe(true);
+
+    fresh.flush({ ...page('p3'), page: 3 });
+    expect(component.vacancies().map((v) => v.externalRef)).toEqual(['p3']);
+
+    fixture.detectChanges();
+    flushCities();
   });
 });
